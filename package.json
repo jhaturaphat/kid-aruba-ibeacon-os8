@@ -1,0 +1,26 @@
+{
+  "name": "kid-aruba-ibeacon-os8",
+  "version": "1.0.0",
+  "description": "ibeacon asset tracking with aruba",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "nodemon src/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "iBeacon",
+    "Aruba BLE"
+  ],
+  "author": "Jaturapat Siriboon",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "mysql2": "^3.14.1",
+    "protobufjs": "^7.5.3",
+    "ws": "^8.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
