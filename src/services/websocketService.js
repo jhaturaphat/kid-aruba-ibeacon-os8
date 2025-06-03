@@ -16,9 +16,9 @@ exports.initWebsocket = (server) => {
                 let bleobj = JSON.stringify(telemetryReport);
                 let sensor = JSON.parse(bleobj);
                 
-                // if(sensor.reported){
-                //   console.log(bleobj); 
-                // }
+                if(sensor.reported){
+                  console.log(bleobj); 
+                }
                 // ส่งไปยัง sensorModel เพื่อบันทึก               
                 Sensor.create(sensor);   
                
