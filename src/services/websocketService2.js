@@ -24,7 +24,7 @@ exports.initWebsocket = (server) => {
                   building: json.building,
                   floor: json.floor
                 });
-                ws.send(`✅ Filter updated: building=${json.building}, floor=${json.floor}`);
+                ws.send(`✅ Filter updated: building=${JSON.stringify(json.building)}, floor=${json.floor}`);
               } else {
                 console.log("📩 Client message:", json);
               }
@@ -55,9 +55,9 @@ exports.broadcast = (sensor) => {
     wss.clients.forEach((client) => {
       if (client.readyState === WebSocket.OPEN) {
         const filter = clientFilters.get(client) || {};       
-        
-        console.log("sensor ",sensor.reporter.mac);
-        console.log("filter ", filter.building);
+        if(Object.keys(filter).length === 0) return; //ถ้าเป็น Object ว่างให้ออกจาก function ทันที
+        // console.log("sensor ",sensor.reporter.mac);
+        // console.log("filter ", filter);
         if(filter.building && typeof filter.building === 'object'){
             const isMatched = Object.values(filter?.building ?? {}).includes(sensor.reporter.mac);
             if(isMatched){ // ส่งต่อให้เฉพาะ client ที่สนใจอาคาร/ชั้นนี้            
