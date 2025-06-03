@@ -19,40 +19,10 @@ const Sensor = {
         // console.log(sensor.reported.beacons);
         
         
-        const params = [];
-          // item.beacons[0]?.ibeacon?.uuid ?? null,
-          // item.localName ?? null,
-          // item.mac ?? null,
-          // item.model ?? null,
-          // item.beacons[0]?.ibeacon?.major ?? null, 
-          // item.beacons[0]?.ibeacon?.minor ?? null,
-          // null,
-          // null,
-          // item.beacons[0]?.ibeacon?.power ?? null,
-          // rssi,          
+        const params = [];             
           
           let distanc = 0;
-        // if(item.deviceClass[0]?.includes('eddystone') 
-        //   && item.beacons[0]?.eddystone.hasOwnProperty('uid')){
-        //   const rssi = item.rssi?.avg ?? item.rssi?.bulk ?? item.rssi?.last ?? item.rssi?.max ?? item.rssi?.smooth ?? null;
-        //   params.push(item.beacons[0]?.eddystone.uid?.nid ?? null);
-        //   params.push(item.localName ?? null);
-        //   params.push(item.mac ?? null ?? null)
-        //   params.push(item.deviceClass[0] ?? null);
-        //   params.push(null);
-        //   params.push(null);
-        //   params.push(null);
-        //   params.push(item.sensors.temperatureC ?? null);
-        //   params.push(item.beacons[0]?.eddystone.power ?? null);
-        //   params.push(rssi)
-        //   params.push(sensor.reporter.name ?? null);
-        //   params.push(sensor.reporter.mac ?? null);
-        //   params.push(sensor.reporter.hwType ?? null);
-        //   distanc = this.calculateDistance(rssi, item.beacons[0]?.ibeacon?.power, 3.2);
-        //   // console.log(rssi);
-        //   // return;
-            
-        // }else 
+        
         if(item.deviceClass[0]?.includes('iBeacon')) {
           const rssi = item.rssi?.avg ?? item.rssi?.bulk ?? item.rssi?.last ?? item.rssi?.max ?? item.rssi?.smooth ?? null;
           params.push(item.beacons[0]?.ibeacon?.uuid ?? null);

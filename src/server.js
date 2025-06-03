@@ -4,7 +4,7 @@ const http = require('http');
 const express = require('express');
 
 
-const websocketService = require('./services/websocketService');
+const websocketService = require('./services/websocketService2');
 
 // Middleware
 const app = express();
@@ -24,7 +24,7 @@ app.get('/users', async (req, res) => {
   });
 
   // Setup WebSocket
-websocketService.initWebsocket(server)
+websocketService.initWebsocket(server);
 
 // Start server
 const PORT = process.env.PORT || 3000;
