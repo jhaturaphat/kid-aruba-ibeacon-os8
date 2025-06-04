@@ -37,7 +37,7 @@ exports.initWebsocket = (server) => {
                 let sensor = JSON.parse(bleobj);
                 if(sensor.reported){
                     // console.log(sensor.reporter.mac);
-                    this.broadcast(sensor)
+                  this.broadcast(sensor)
                 }
             }
 
@@ -54,8 +54,9 @@ exports.broadcast = (sensor) => {
     if (!wss) return;    
     wss.clients.forEach((client) => {
       if (client.readyState === WebSocket.OPEN) {
-        const filter = clientFilters.get(client) || {};       
-        if(Object.keys(filter).length === 0) return; //ถ้าเป็น Object ว่างให้ออกจาก function ทันที
+        const filter = clientFilters.get(client) || {};   
+        //ถ้าเป็น Object ว่าง → ให้ออกจาก function ทันที    
+        if(Object.keys(filter).length === 0) return; 
         // console.log("sensor ",sensor.reporter.mac);
         // console.log("filter ", filter);
         if(filter.building && typeof filter.building === 'object'){
