@@ -1,0 +1,63 @@
+.floor-plan-container {
+    position: relative;
+    width: 100%;
+    height: 80vh;
+    overflow: auto;
+  }
+  
+  .floor-plan {
+    position: relative;
+    width: 1000px; /* ตามขนาดจริงของ floor plan */
+    height: 600px; /* ตามขนาดจริงของ floor plan */
+    background-size: contain;
+    background-repeat: no-repeat;
+    border: 1px solid #ccc;
+  }
+  
+  .access-point {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    background-color: blue;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 10px;
+    text-align: center;
+    line-height: 24px;
+    z-index: 10;
+  }
+  
+  .asset-marker {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 10px;
+    text-align: center;
+    line-height: 20px;
+    z-index: 5;
+    transition: all 0.5s ease;
+  }
+  
+  .rssi-table {
+    margin-top: 20px;
+  }
+  
+  .rssi-table table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .rssi-table th, .rssi-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
+  
+  .rssi-table th {
+    background-color: #f2f2f2;
+  }

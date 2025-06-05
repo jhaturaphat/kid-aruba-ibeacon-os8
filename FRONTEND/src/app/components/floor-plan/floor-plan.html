@@ -1,0 +1,42 @@
+<div class="floor-plan-container">
+    <div class="floor-plan" [style.backgroundImage]="'url(' + floorPlanImage + ')'">
+      <!-- แสดง Access Points -->
+      <div *ngFor="let ap of aps" 
+           class="access-point"
+           [style.left.px]="ap.x"
+           [style.top.px]="ap.y"
+           [title]="ap.name">
+        {{ ap.name }}
+      </div>
+  
+      <!-- แสดง Assets -->
+      <div *ngFor="let asset of assets" 
+           class="asset-marker"
+           [style.left.px]="asset.x"
+           [style.top.px]="asset.y"
+           [title]="asset.name + ' - ใกล้กับ ' + (aps.find(ap => ap.id === asset.closestAp)?.name">
+        {{ asset.name }}
+      </div>
+    </div>
+  
+    <!-- แสดงตารางข้อมูล RSSI -->
+    <div class="rssi-table" *ngIf="assets.length > 0">
+      <h3>ค่า RSSI</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Asset</th>
+            <th *ngFor="let ap of aps">{{ ap.name }}</th>
+            <th>ใกล้ที่สุด</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let asset of assets">
+            <td>{{ asset.name }}</td>
+            <td *ngFor="let ap of aps">{{ asset.rssiValues[ap.id] || '-' }}</td>
+            <td>{{ aps.find(ap => ap.id === asset.closestAp)?.name || '-' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>

@@ -1,3 +1,47 @@
-# 
+# BACKEND
 BACKEND/node_modules
 BACKEND/.env
+
+
+# FRONTEND
+
+# Compiled output
+FRONTEND/dist
+FRONTEND/tmp
+FRONTEND/out-tsc
+FRONTEND/bazel-out
+
+# Node
+FRONTEND/node_modules
+FRONTEND/npm-debug.log
+FRONTEND/yarn-error.log
+
+# IDEs and editors
+FRONTEND/.idea/
+FRONTEND/.project
+FRONTEND/.classpath
+FRONTEND/.c9/
+FRONTEND/*.launch
+FRONTEND/.settings/
+FRONTEND/*.sublime-workspace
+
+# Visual Studio Code
+FRONTEND/.vscode/*
+FRONTEND/!.vscode/settings.json
+FRONTEND/!.vscode/tasks.json
+FRONTEND/!.vscode/launch.json
+FRONTEND/!.vscode/extensions.json
+FRONTEND/.history/*
+
+# Miscellaneous
+FRONTEND/.angular/cache
+FRONTEND/.sass-cache/
+FRONTEND/connect.lock
+FRONTEND/coverage
+FRONTEND/libpeerconnection.log
+FRONTEND/testem.log
+FRONTEND/typings
+
+# System files
+FRONTEND/.DS_Store
+FRONTEND/Thumbs.db

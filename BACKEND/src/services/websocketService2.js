@@ -1,7 +1,7 @@
 const WebSocket = require('ws');
 const fs = require('node:fs');
 const aruba_telemetry_proto = require('../../aruba/aruba_iot_proto').aruba_telemetry;
-const Sensor = require('../models/sensorModel.js');
+const SensorModel = require('../models/sensorModel.js');
 const { BufferReader } = require('protobufjs');
 
 let wss;
@@ -37,6 +37,7 @@ exports.initWebsocket = (server) => {
                 let sensor = JSON.parse(bleobj);
                 if(sensor.reported){
                     // console.log(sensor.reporter.mac);
+                  SensorModel.create(sensor)
                   this.broadcast(sensor)
                 }
             }
