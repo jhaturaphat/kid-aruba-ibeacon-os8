@@ -1,0 +1,17 @@
+<button (click)="fileInput.click()">เพิ่ม Floor Plan</button>
+<input type="file" #fileInput (change)="onFileSelected($event)" accept="image/*" style="display:none">
+
+<div class="floor-plan-container">
+    <img [src]="floorPlanImage" alt="" srcset="">
+</div>
+
+<button (click)="addAp()">เพิ่ม Access Point</button>
+
+<div class="floor-plan-container" cdkDropList>
+  <img [src]="floorPlanImage">
+  <div *ngFor="let ap of accessPoints; let i = index"
+       cdkDrag
+       (cdkDragEnded)="onDragEnded($event, i)">
+       🛰️
+  </div>
+</div>
