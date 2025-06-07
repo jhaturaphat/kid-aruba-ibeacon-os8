@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { FloorPlanEditorComponent } from './components/floor-plan-editor/floor-plan-editor';
 
 @Component({
-  selector: 'app-root',
-  imports: [RouterOutlet],
+  selector: 'app-root',  
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrl: './app.css',  
+  imports: [RouterOutlet,FloorPlanEditorComponent ],
 })
 export class App {
   protected title = 'FRONTEND';
