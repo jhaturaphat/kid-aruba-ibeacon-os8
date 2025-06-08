@@ -1,0 +1,26 @@
+<div class="floor-plan-editor-wrapper">
+  <div class="file-input-section">
+    <label for="floorPlanFileInput" class="file-input-label">
+      เลือกรูป Floor Plan
+    </label>
+    <input type="file" id="floorPlanFileInput" (change)="onFileSelected($event)" accept="image/*">
+    <span *ngIf="!floorPlanImage" class="no-image-message">กรุณาเลือกรูป Floor Plan</span>
+  </div>
+
+  <div class="floor-plan-container" #floorPlanContainer (mouseup)="onDropWifi($event)" (mouseleave)="onMouseLeave()"
+       *ngIf="floorPlanImage"> <img [src]="floorPlanImage" alt="Floor Plan" class="floor-plan-image">
+
+    <div
+      *ngFor="let wifiSymbol of wifiSymbols; let i = index"
+      class="wifi-symbol"
+      [style.left.px]="wifiSymbol.x"
+      [style.top.px]="wifiSymbol.y"
+      (mousedown)="onDragStart(i, $event)"
+    >
+      <img src="assets/wifi-icon.png" alt="Wifi Symbol" class="wifi-icon">
+      <span class="wifi-label">Wifi {{ i + 1 }}</span>
+    </div>
+
+    <button class="add-wifi-button" (click)="addWifiSymbol()">เพิ่มสัญลักษณ์ Wifi</button>
+  </div>
+</div>

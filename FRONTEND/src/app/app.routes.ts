@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { FloorPlanComponent } from './components/floor-plan.component/floor-plan.component';
-import { FloorPlanEditorComponent } from './components/floor-plan-editor/floor-plan-editor';
+import { FloorPlanEditorComponent } from './components/floor-plan-editor/floor-plan-editor.component';
 
 
 export const routes: Routes = [

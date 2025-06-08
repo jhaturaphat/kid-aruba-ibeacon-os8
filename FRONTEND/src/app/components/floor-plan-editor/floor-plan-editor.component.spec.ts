@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FloorPlanEditor } from './floor-plan-editor';
+import { FloorPlanEditor } from './floor-plan-editor.component';
 
 describe('FloorPlanEditor', () => {
   let component: FloorPlanEditor;
