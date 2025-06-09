@@ -1,11 +1,9 @@
-/* floor-plan-editor.component.css */
-
+/* --- ส่วนของ Floor Plan Editor Wrapper และ File Input (เหมือนเดิม) --- */
 .floor-plan-editor-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px;
-  margin: auto;
 }
 
 .file-input-section {
@@ -29,7 +27,7 @@
 }
 
 #floorPlanFileInput {
-  display: none; /* ซ่อน input type="file" เริ่มต้น */
+  display: none;
 }
 
 .no-image-message {
@@ -39,11 +37,11 @@
   font-weight: bold;
 }
 
-/* ส่วนที่เหลือของ CSS ยังคงเหมือนเดิม */
+/* --- ส่วนของ Floor Plan Container และ Image (เหมือนเดิม) --- */
 .floor-plan-container {
   position: relative;
-  width: 1400px; /* กำหนดขนาดตามที่คุณต้องการ */
-  /* height: 600px; */
+  width: 800px; /* กำหนดขนาดตามที่คุณต้องการ */
+  height: 600px;
   border: 1px solid #ccc;
   overflow: hidden;
   background-color: #f0f0f0;
@@ -56,11 +54,12 @@
   display: block;
 }
 
-.wifi-symbol {
+/* --- สไตล์สำหรับสัญลักษณ์ทั่วไป (Wifi และ AP) --- */
+.symbol { /* สไตล์พื้นฐานสำหรับทั้ง Wifi และ AP */
   position: absolute;
   cursor: grab;
-  width: 60px;
-  height: 60px;
+  width: 70px;
+  height: 70px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -71,29 +70,123 @@
   padding: 2px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   z-index: 10;
+  transition: background-color 0.2s, border-color 0.2s, box-shadow 0.2s;
 }
 
-.wifi-symbol:hover {
+.symbol:hover {
   cursor: grab;
   background-color: rgba(255, 255, 255, 1);
   border-color: #0056b3;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
 }
 
-.wifi-icon {
-  width: 40px;
-  height: 40px;
+.symbol.dragging {
+  cursor: grabbing;
+  border: 2px solid #0056b3;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+.symbol-icon { /* สไตล์สำหรับ icon ภายในสัญลักษณ์ */
+  width: 30px;
+  height: 30px;
   margin-bottom: 2px;
 }
 
-.wifi-label {
-  font-size: 0.7em;
+.symbol-label { /* สไตล์สำหรับชื่อสัญลักษณ์ */
+  font-size: 0.8em;
   color: #333;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }
 
-.add-wifi-button {
+/* สไตล์เฉพาะสำหรับ Wifi Symbol */
+.wifi-symbol {
+  border-color: #007bff;
+}
+
+/* สไตล์เฉพาะสำหรับ Access Point Symbol */
+.ap-symbol {
+  border-color: #ffc107; /* สีเหลือง */
+  background-color: rgba(255, 243, 205, 0.8); /* สีพื้นหลังเหลืองอ่อน */
+}
+
+/* --- สไตล์สำหรับปุ่มลบสัญลักษณ์ (ปรับชื่อ class) --- */
+.delete-symbol-button {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8em;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.2s;
+  z-index: 1;
+}
+
+.delete-symbol-button:hover {
+  background-color: #c82333;
+}
+
+/* --- สไตล์สำหรับ Beacon ที่แสดงบนแผนที่ --- */
+.beacon-on-map {
+  position: absolute;
+  background-color: rgba(255, 99, 71, 0.9); /* สีแดงอมส้ม */
+  border: 1px solid #cc0000;
+  border-radius: 5px;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  z-index: 15; /* อยู่ด้านบนสัญลักษณ์แต่ใต้ Modal */
+  pointer-events: none; /* ไม่ให้คลิกหรือลากได้ */
+  transform: translate(-50%, -50%); /* จัดตำแหน่งกึ่งกลาง */
+  min-width: 80px;
+  text-align: center;
+}
+
+.beacon-icon {
+  width: 25px;
+  height: 25px;
+  margin-bottom: 2px;
+}
+
+.beacon-label {
+  font-size: 0.75em;
+  color: white;
+  font-weight: bold;
+}
+
+.beacon-info {
+  font-size: 0.65em;
+  color: #eee;
+}
+
+/* --- สไตล์สำหรับปุ่มเพิ่มสัญลักษณ์ (ปรับปรุง) --- */
+.action-buttons {
   position: absolute;
   bottom: 20px;
   left: 20px;
+  display: flex;
+  gap: 10px; /* ระยะห่างระหว่างปุ่ม */
+  z-index: 20;
+}
+
+.add-button, .update-beacon-button {
   padding: 10px 15px;
   background-color: #28a745;
   color: white;
@@ -101,9 +194,107 @@
   border-radius: 5px;
   cursor: pointer;
   font-size: 1em;
-  z-index: 20;
+  transition: background-color 0.2s;
 }
 
-.add-wifi-button:hover {
+.add-button:hover, .update-beacon-button:hover {
   background-color: #218838;
+}
+
+.update-beacon-button {
+  background-color: #17a2b8; /* สีฟ้า */
+}
+
+.update-beacon-button:hover {
+  background-color: #138496;
+}
+
+/* --- สไตล์สำหรับ Modal (เหมือนเดิม) --- */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  width: 400px;
+  max-width: 90%;
+}
+
+.modal-content h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #333;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #555;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group textarea {
+  width: calc(100% - 20px);
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1em;
+  box-sizing: border-box;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.modal-buttons {
+  text-align: right;
+  margin-top: 20px;
+}
+
+.modal-buttons button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  margin-left: 10px;
+  transition: background-color 0.2s;
+}
+
+.save-button {
+  background-color: #28a745;
+  color: white;
+}
+
+.save-button:hover {
+  background-color: #218838;
+}
+
+.cancel-button {
+  background-color: #6c757d;
+  color: white;
+}
+
+.cancel-button:hover {
+  background-color: #5a6268;
 }
