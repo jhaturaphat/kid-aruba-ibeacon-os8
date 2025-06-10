@@ -1,0 +1,92 @@
+<div class="floor-plan-editor-wrapper">
+    <div class="file-input-section">
+      <label for="floorPlanFileInput" class="file-input-label">
+        เลือกรูป Floor Plan
+      </label>
+      <input type="file" id="floorPlanFileInput" (change)="onFileSelected($event)" accept="image/*">
+      <span *ngIf="!floorPlanImage" class="no-image-message">กรุณาเลือกรูป Floor Plan</span>
+    </div>
+  
+    <div class="floor-plan-container" #floorPlanContainer (mouseup)="onDropSymbol($event)" (mouseleave)="onMouseLeave()"
+         *ngIf="floorPlanImage">
+      <img [src]="floorPlanImage" alt="Floor Plan" class="floor-plan-image">
+  
+      <div
+        *ngFor="let symbol of symbols; let i = index"
+        class="symbol" [ngClass]="{'wifi-symbol': symbol.type === 'wifi', 'ap-symbol': symbol.type === 'ap'}"
+        [style.left.px]="symbol.x"
+        [style.top.px]="symbol.y"
+        (mousedown)="onDragStart(i, $event)"
+        (click)="editSymbol(i, $event)"
+      >
+        <img *ngIf="symbol.type === 'wifi'" src="assets/wifi-icon.png" alt="Wifi Symbol" class="symbol-icon">
+        <img *ngIf="symbol.type === 'ap'" src="assets/ap-icon.png" alt="AP Symbol" class="symbol-icon">
+        <span class="symbol-label">{{ symbol.name }}</span>
+  
+        <button class="delete-symbol-button" (click)="deleteSymbol(i); $event.stopPropagation();">X</button>
+      </div>
+  
+      <div
+      *ngFor="let beacon of beaconsOnMap; let beaconIndex = index"
+      class="beacon-on-map"
+      [style.left.px]="beacon.x"
+      [style.top.px]="beacon.y"
+      (mouseenter)="onBeaconMouseEnter(beacon, $event)"  (mouseleave)="onBeaconMouseLeave()"                [ngClass]="{'hovered': hoveredBeaconInfo?.beaconName === beacon.beaconName}" >
+      <img src="assets/beacon-icon.png" alt="Beacon" class="beacon-icon">
+      <span class="beacon-label">{{ beacon.beaconName }}</span>
+      <span class="beacon-info">({{ beacon.rssi }} dBm)</span>
+    </div>
+
+    <div *ngIf="showBeaconPopup && hoveredBeaconInfo"
+         class="beacon-popup"
+         [style.left.px]="popupX"
+         [style.top.px]="popupY">
+      <h3>{{ hoveredBeaconInfo.beaconName }}</h3>
+      <p>AP: {{ hoveredBeaconInfo.ap_mac }}</p>
+      <p>RSSI: {{ hoveredBeaconInfo.rssi }} dBm</p>
+    </div>
+
+
+    
+      <div class="action-buttons">
+        <button class="add-button" (click)="addSymbol('wifi')">เพิ่มสัญลักษณ์ Wifi</button>
+        <button class="add-button" (click)="addSymbol('ap')">เพิ่ม Access Point</button>
+        <button class="update-beacon-button" (click)="updateBeaconsOnMap()">อัปเดตตำแหน่ง Beacon</button>
+      </div>
+    
+  </div>
+  
+  <div class="modal" *ngIf="showEditModal">
+    <div class="modal-content">
+      <h2>แก้ไขคุณสมบัติ {{ currentEditingSymbol.type === 'wifi' ? 'Wifi' : 'Access Point' }}</h2>
+      <form (submit)="saveSymbolProperties()">
+        <div class="form-group">
+          <label for="symbolName">ชื่อ:</label>
+          <input type="text" id="symbolName" [(ngModel)]="currentEditingSymbol.name" name="symbolName">
+        </div>
+  
+        <ng-container *ngIf="currentEditingSymbol.type === 'wifi'">
+          <div class="form-group">
+            <label for="wifiStrength">ความแรงสัญญาณ:</label>
+            <input type="number" id="wifiStrength" [(ngModel)]="currentEditingSymbol.strength" name="wifiStrength" min="0" max="100">
+          </div>
+          <div class="form-group">
+            <label for="wifiDescription">รายละเอียด:</label>
+            <textarea id="wifiDescription" [(ngModel)]="currentEditingSymbol.description" name="wifiDescription"></textarea>
+          </div>
+        </ng-container>
+  
+        <ng-container *ngIf="currentEditingSymbol.type === 'ap'">
+          <div class="form-group">
+            <label for="apMac">MAC Address:</label>
+            <input type="text" id="apMac" [(ngModel)]="currentEditingSymbol.ap_mac" name="apMac">
+          </div>
+        </ng-container>
+  
+        <div class="modal-buttons">
+          <button type="submit" class="save-button">บันทึก</button>
+          <button type="button" class="cancel-button" (click)="cancelEdit()">ยกเลิก</button>
+        </div>
+      </form>
+    </div>
+  </div>
