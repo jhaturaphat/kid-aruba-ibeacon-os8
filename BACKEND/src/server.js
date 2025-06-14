@@ -14,10 +14,9 @@ const server = http.createServer(app);
 // เริ่มต้น WebSocket
 
 // Routes
-app.get('/users', async (req, res) => {
+app.get('/', async (req, res) => {
     try {
-      const users = await User.getAll();
-      res.json(users);
+      res.json({message:"connection ok"});
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
