@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, ViewChild, ElementRef, HostListener } fro
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { WebSocketService } from '../../services/websocket.service';
+import { iBeacon } from '../../interfaces/beacon.interface';
 
 // --- Interfaces (เหมือนเดิม) ---
 interface BaseSymbol {
@@ -49,10 +50,10 @@ interface BeaconOnMapDisplay {
   selector: 'app-floor-plan-editor',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './floor-plan-editor2.component.html',
-  styleUrls: ['./floor-plan-editor2.component.css']
+  templateUrl: './floor-plan-editor3.component.html',
+  styleUrls: ['./floor-plan-editor3.component.css']
 })
-export class FloorPlanEditor2Component implements OnInit, OnDestroy {
+export class FloorPlanEditor3Component implements OnInit, OnDestroy {
   @ViewChild('floorPlanContainer', { static: false }) floorPlanContainer!: ElementRef;
 
   floorPlanImage: string | ArrayBuffer | null = null;
@@ -71,16 +72,7 @@ export class FloorPlanEditor2Component implements OnInit, OnDestroy {
   currentEditingSymbol: EditableSymbol = { id: 0, x: 0, y: 0, type: 'wifi' };
   currentEditingSymbolIndex: number | null = null;
 
-  beaconReadings: BeaconReading[] = [
-    { beacon: 'iBeacon-A', ap_mac: 'AP-MAC-1', pw: 20, rssi: -50 },
-    { beacon: 'iBeacon-A', ap_mac: 'AP-MAC-2', pw: 20, rssi: -80 },
-    { beacon: 'iBeacon-B', ap_mac: 'AP-MAC-1', pw: 40, rssi: -80 },
-    { beacon: 'iBeacon-B', ap_mac: 'AP-MAC-2', pw: 60, rssi: -55 },
-    { beacon: 'iBeacon-C', ap_mac: 'AP-MAC-1', pw: 30, rssi: -60 },
-    { beacon: 'iBeacon-C', ap_mac: 'AP-MAC-3', pw: 30, rssi: -70 }, // AP-MAC-3 ยังไม่มีบนแผนที่
-    { beacon: 'iBeacon-D', ap_mac: 'AP-MAC-1', pw: 25, rssi: -52 }, // เพิ่ม Beacon เพื่อให้ซ้อนทับ
-    { beacon: 'iBeacon-E', ap_mac: 'AP-MAC-1', pw: 22, rssi: -51 }  // เพิ่ม Beacon เพื่อให้ซ้อนทับ
-  ];
+  beaconReadings: iBeacon[] = []
 
   // --- เพิ่มตัวแปรสำหรับ Beacon Popup ---
   showBeaconPopup: boolean = false;
@@ -317,7 +309,7 @@ export class FloorPlanEditor2Component implements OnInit, OnDestroy {
     // --- ฟังก์ชัน updateBeaconsOnMap (เหมือนเดิม แต่ใช้ BeaconOnMapDisplay Interface) ---
     updateBeaconsOnMap(): void {
       this.beaconsOnMap = [];
-      
+  
       const groupedBeacons = new Map<string, BeaconReading[]>();
       for (const reading of this.beaconReadings) {
         if (!groupedBeacons.has(reading.beacon)) {
